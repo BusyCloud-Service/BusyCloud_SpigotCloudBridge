@@ -1,0 +1,5 @@
+name: CloudAPI
+version: 1.0
+author: PlugDev
+main: de.plugdev.spigot.CloudBridge
+commands:
