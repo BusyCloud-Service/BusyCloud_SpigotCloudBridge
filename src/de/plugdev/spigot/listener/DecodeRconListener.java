@@ -8,21 +8,19 @@ import de.terrarier.netlistening.api.event.DecodeListener;
 
 public class DecodeRconListener implements DecodeListener {
 
-	String nextMessage;
+	
 	
 	@Override
 	public void trigger(DecodeEvent event) {
 		final String key = event.getData().read();
 		if (key.equalsIgnoreCase("rcon")) {
-			while ((nextMessage = event.getData().read()) != null) {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(CloudBridge.getCloud(), new Runnable() {
-					
-					@Override
-					public void run() {
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), nextMessage);
-					}
-				});
-			}
+			Bukkit.getScheduler().scheduleSyncDelayedTask(CloudBridge.getCloud(), new Runnable() {
+				
+				@Override
+				public void run() {
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), event.getData().read());
+				}
+			});
 		}
 	}
 
