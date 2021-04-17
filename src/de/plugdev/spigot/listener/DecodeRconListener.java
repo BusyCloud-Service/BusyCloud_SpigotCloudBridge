@@ -1,7 +1,5 @@
 package de.plugdev.spigot.listener;
 
-import java.util.concurrent.Callable;
-
 import org.bukkit.Bukkit;
 
 import de.plugdev.spigot.CloudBridge;
@@ -17,13 +15,12 @@ public class DecodeRconListener implements DecodeListener {
 		final String key = event.getData().read();
 		if (key.equalsIgnoreCase("rcon")) {
 			while ((nextMessage = event.getData().read()) != null) {
-				Bukkit.getScheduler().callSyncMethod(CloudBridge.getCloud(), new Callable<Boolean>() {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(CloudBridge.getCloud(), new Runnable() {
 					
 					@Override
-					public Boolean call() {
-						return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), nextMessage);
+					public void run() {
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), nextMessage);
 					}
-					
 				});
 			}
 		}
