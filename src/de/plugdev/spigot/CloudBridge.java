@@ -10,6 +10,8 @@ import de.plugdev.spigot.listener.DecodeRconListener;
 import de.plugdev.spigot.spigotlistener.PlayerJoinListener;
 import de.terrarier.netlistening.Client;
 import de.terrarier.netlistening.api.DataContainer;
+import de.terrarier.netlistening.api.event.ConnectionTimeoutEvent;
+import de.terrarier.netlistening.api.event.ConnectionTimeoutListener;
 
 public class CloudBridge extends JavaPlugin {
 	
@@ -45,6 +47,14 @@ public class CloudBridge extends JavaPlugin {
 
 		client.registerListener(new DecodeRconListener());
 		client.registerListener(new DecodePingListener());
+		client.registerListener(new ConnectionTimeoutListener() {
+			
+			@Override
+			public void trigger(ConnectionTimeoutEvent event) {
+				Bukkit.getConsoleSender().sendMessage("§cConnection to Cloud timed out. Stopping Cloud.");
+				Bukkit.shutdown();
+			}
+		});
 		
 		
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
