@@ -1,4 +1,4 @@
-package de.plugdev.spigot.listener;
+package de.plugdev.spigot.general.listener;
 
 import org.bukkit.Bukkit;
 

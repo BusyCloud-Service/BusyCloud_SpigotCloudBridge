@@ -1,4 +1,4 @@
-package de.plugdev.spigot.listener;
+package de.plugdev.spigot.general.listener;
 
 import de.plugdev.spigot.CloudBridge;
 import de.terrarier.netlistening.api.DataContainer;
@@ -17,7 +17,7 @@ public class DecodePingListener implements DecodeListener {
 			container.add("returnping");
 			container.add(got);
 			container.add(System.currentTimeMillis());
-			CloudBridge.getCloud().getClient().sendData(container);
+			CloudBridge.getCloud().getNetworkClient().sendData(container);
 		}
 	}
 	

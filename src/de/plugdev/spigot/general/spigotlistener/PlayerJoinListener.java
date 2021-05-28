@@ -1,4 +1,4 @@
-package de.plugdev.spigot.spigotlistener;
+package de.plugdev.spigot.general.spigotlistener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +19,7 @@ public class PlayerJoinListener implements Listener {
 			container.add("adminmessage");
 			container.add(event.getPlayer().getName() + " with UUID " + event.getPlayer().getUniqueId() + " and " + event.getAddress().getHostAddress() + " tried to connect without the proxy.");
 			
-			CloudBridge.getCloud().getClient().sendData(container);
+			CloudBridge.getCloud().getNetworkClient().sendData(container);
 		}
 	}
 	

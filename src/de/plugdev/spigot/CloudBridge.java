@@ -2,22 +2,19 @@ package de.plugdev.spigot;
 
 import java.io.File;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.plugdev.spigot.listener.DecodePingListener;
-import de.plugdev.spigot.listener.DecodeRconListener;
-import de.plugdev.spigot.spigotlistener.PlayerJoinListener;
+import de.plugdev.spigot.general.General;
 import de.terrarier.netlistening.Client;
 import de.terrarier.netlistening.api.DataContainer;
-import de.terrarier.netlistening.api.event.ConnectionTimeoutEvent;
-import de.terrarier.netlistening.api.event.ConnectionTimeoutListener;
 
 public class CloudBridge extends JavaPlugin {
 	
 	private Client client;
 	private String cloudKey;
 	private static CloudBridge cloud;
+	
+	private General general;
 	
 	public static void main(String[] args) {
 	}
@@ -38,26 +35,9 @@ public class CloudBridge extends JavaPlugin {
 		}
 		con.delete();
 		
+		general = new General();
 		
-		DataContainer dataContainer = new DataContainer();
-		dataContainer.add("Spigot");
-		dataContainer.add("linkserver");
-		dataContainer.add(cloudKey);
-		client.sendData(dataContainer);
-
-		client.registerListener(new DecodeRconListener());
-		client.registerListener(new DecodePingListener());
-		client.registerListener(new ConnectionTimeoutListener() {
-			
-			@Override
-			public void trigger(ConnectionTimeoutEvent event) {
-				Bukkit.getConsoleSender().sendMessage("§cConnection to Cloud timed out. Stopping Cloud.");
-				Bukkit.shutdown();
-			}
-		});
-		
-		
-		Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
+		general.enable(cloudKey);
 	}
 	
 	@Override
@@ -76,8 +56,12 @@ public class CloudBridge extends JavaPlugin {
 		return cloud;
 	}
 	
-	public Client getClient() {
+	public Client getNetworkClient() {
 		return client;
+	}
+	
+	public General getGeneral() {
+		return general;
 	}
 	
 	public String getCloudKey() {
